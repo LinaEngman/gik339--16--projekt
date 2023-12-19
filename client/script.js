@@ -48,3 +48,18 @@ fetch(url)
     // Hantera eventuella fel under hämtningen
     console.error("Fetch error:", error);
   });
+
+//--------------- Formulär ---------------
+  const buttonCRUD = document.getElementsByTagName("a");
+
+  for (i = 0 ; i < buttonCRUD.length ; i++) {
+
+   if ( buttonCRUD[i].id !== "resetEvent" ) {
+    buttonCRUD[i].addEventListener("click", responseModal);
+   }
+
+  }
+
+  function responseModal (e) {
+    console.log(e.target);
+  }
