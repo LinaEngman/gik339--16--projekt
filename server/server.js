@@ -24,6 +24,7 @@ server
         titel TEXT,
         datum TEXT,
         plats TEXT,
+        tid   TEXT
       )
       `, (createErr) => {
         if (createErr) {
@@ -33,7 +34,7 @@ server
         }
       });
     }
-    db.close();
+    
   });
 
 
@@ -50,6 +51,20 @@ server.get('/events', (req, res) => {
       res.status(500).send(err.message);
     } else {
       res.send(rows);
+    }
+  });
+});
+
+
+server.post('/events', (req, res) => {
+  const { titel, datum, plats, tid } = req.body;
+  const sql = 'INSERT INTO events (titel, datum, plats, tid) VALUES (?, ?, ?, ?)';
+  const params = [titel, datum, plats, tid];
+  db.run(sql, params, (err) => {
+    if (err) {
+      res.status(500).send(err.message);
+    } else {
+      res.send('Post added successfully');
     }
   });
 });
