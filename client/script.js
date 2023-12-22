@@ -1,4 +1,4 @@
-const url = "http://localhost:3000/users"
+const url = "http://localhost:3000/events"
 fetch(url)
 
 .then((response) => { 
