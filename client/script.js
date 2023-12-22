@@ -124,10 +124,24 @@ function responseModal (e) {
 } */
 
 const myModal = document.getElementById('modalPopUp');
-const myInput = document.getElementById('test');
+const button = document.getElementById('testButton');
 
-myModal.addEventListener('shown.bs.modal', () => {
-  myInput.focus()
+// button.addEventListener('click', modalFunc);
+
+/* function modalFunc (e) {
+  console.log(e);
+  myModal.showModal();
+} */
+
+/* function modalFunc () {
+
+} */
+
+// Eventet "submit" kan användas för att visa medddelande rutan sen.
+
+myModal.addEventListener('shown.bs.modal', (e) => {
+  console.log(e)
+  button.focus()
 });
 
 
