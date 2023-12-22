@@ -104,23 +104,38 @@ function handleDelete(id) {
 }
 
 //--------------- Formulär ---------------
-  /* const buttonCRUD = document.getElementsByTagName("input");
 
-  for (i = 0 ; i < buttonCRUD.length ; i++) {
 
-   if ( buttonCRUD[i].id !== "buttonReset" ) {
-    buttonCRUD[i].addEventListener("submit", responseModal);
-   }
+// Lägg till formulär
 
-  }
 
+const form = document.getElementById("myForm");
+
+form.addEventListener("submit", responseModal)
 
 function responseModal (e) {
+  e.preventDefault();
 
-} */
+  const eventData = {form.eventNameInput.value}
 
-const myModal = document.getElementById('modalPopUp');
-const button = document.getElementById('testButton');
+  fetch()
+
+
+}
+
+
+const inputCRUD = document.getElementsByTagName("input");
+
+/* for (i = 0 ; i < inputCRUD.length ; i++) {
+
+   if ( inputCRUD[i].id === "buttonAdd", "buttonUpdate") {
+    inputCRUD[i].addEventListener("submit", responseModal);
+   }
+
+  } */
+
+//const myModal = document.getElementById('modalPopUp');
+//const button = document.getElementById('testButton');
 
 // button.addEventListener('click', modalFunc);
 
