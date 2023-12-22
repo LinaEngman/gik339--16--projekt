@@ -50,16 +50,28 @@ fetch(url)
   });
 
 //--------------- Formulär ---------------
-  const buttonCRUD = document.getElementsByTagName("a");
+  /* const buttonCRUD = document.getElementsByTagName("input");
 
   for (i = 0 ; i < buttonCRUD.length ; i++) {
 
-   if ( buttonCRUD[i].id !== "resetEvent" ) {
-    buttonCRUD[i].addEventListener("click", responseModal);
+   if ( buttonCRUD[i].id !== "buttonReset" ) {
+    buttonCRUD[i].addEventListener("submit", responseModal);
    }
 
   }
 
-  function responseModal (e) {
-    console.log(e.target);
-  }
+
+function responseModal (e) {
+
+} */
+
+const myModal = document.getElementById('modalPopUp');
+const myInput = document.getElementById('test');
+
+myModal.addEventListener('shown.bs.modal', () => {
+  myInput.focus()
+});
+
+
+
+  // ${"form"}.on('submit', () => $(".modal").show());
