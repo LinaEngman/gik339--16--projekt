@@ -56,12 +56,26 @@ fetch(url)
 function handleEdit(id) {
   // Implementera din logik för redigering här
   console.log(`Redigera resurs med ID ${id}`);
+  
 }
 
 // Funktion för att hantera borttagning
 function handleDelete(id) {
-  // Implementera din logik för borttagning här
-  console.log(`Ta bort resurs med ID ${id}`);
+    fetch(`http://localhost:3000/events/${id}`, {
+    method: "DELETE",
+  })
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error(`Network response was not ok, status code: ${response.status}`);
+      }
+      // Uppdatera listan och DOM-trädet efter borttagning
+      updateEventList();
+      console.log(`Event med ID ${id} borttaget framgångsrikt`);
+    })
+    .catch((error) => {
+      console.error("Fetch error:", error);
+    });
+
 }
 
 //--------------- Formulär ---------------
