@@ -1,15 +1,13 @@
 const url = "http://localhost:3000/events"
 fetch(url)
 
-.then((response) => { 
+.then((response) => {
     if (!response.ok) {
-        throw new Error(`Network response was not ok, status code: ${response.status}`);
+      throw new Error(`Network response was not ok, status code: ${response.status}`);
     }
-    console.log(response);
     return response.json();
-})
-//.then((jsonData) => console.log(jsonData));
-.then((jsonData) => {
+  })
+  .then((jsonData) => {
     // Skapa en array av JavaScript-objekt som representerar användare
     const eventArray = jsonData.map((event) => {
       return {
@@ -20,6 +18,7 @@ fetch(url)
         tid: event.tid,
       };
     });
+
     // Skapa ett ul-element och ge det en klass
     const eventList = document.createElement("ul");
     eventList.classList.add("eventList");
@@ -28,17 +27,21 @@ fetch(url)
     eventArray.forEach((event) => {
       // Skapa li-element och fyll det med användarinformation
       const listItem = document.createElement("li");
-    
+      listItem.innerHTML = `
+        <strong>${event.titel}</strong><br>
+        Datum: ${event.datum}<br>
+        Plats: ${event.plats}<br>
+        Tid: ${event.tid}<br>
+        <button onclick="handleEdit(${event.id})">Redigera</button>
+        <button onclick="handleDelete(${event.id})">Ta bort</button>
+      `;
+
       // Lägg till li-elementet i ul-elementet
       eventList.appendChild(listItem);
     });
-    // Lägg till ul-elementet i body eller där du vill ha det i DOM-trädet
-    document.body.appendChild(eventList);// Referera till den befintliga div med id "userListContainer"
-    
-    const eventListContainer = document.getElementById("eventListContainer");
 
-    // Lägg till userList i userListContainer
-    eventListContainer.appendChild(eventList);
+    // Lägg till ul-elementet i body eller där du vill ha det i DOM-trädet
+    document.body.appendChild(eventList);
 
     // Logga resultatet
     console.log(eventArray);
@@ -48,6 +51,18 @@ fetch(url)
     // Hantera eventuella fel under hämtningen
     console.error("Fetch error:", error);
   });
+
+// Funktion för att hantera redigering
+function handleEdit(id) {
+  // Implementera din logik för redigering här
+  console.log(`Redigera resurs med ID ${id}`);
+}
+
+// Funktion för att hantera borttagning
+function handleDelete(id) {
+  // Implementera din logik för borttagning här
+  console.log(`Ta bort resurs med ID ${id}`);
+}
 
 //--------------- Formulär ---------------
   /* const buttonCRUD = document.getElementsByTagName("input");
