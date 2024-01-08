@@ -78,11 +78,22 @@ fetch(url)
 //     });
 // }
 
-// Funktion för att hantera redigering
+
+// Funktion för att hantera redigering (oklar)
 function handleEdit(id) {
   // Implementera din logik för redigering här
   console.log(`Redigera resurs med ID ${id}`);
+  
+  fetch(`http://localhost:3000/events/${id}`, {
+    method: "UPDATE",
+})
+.then((response)=> {
+  if (!response.ok) {
+    throw new Error(`Network response was not ok, status code: ${response.status}`);
+  }
+})
 }
+
 
 // Funktion för att hantera borttagning
 function handleDelete(id) {
@@ -108,7 +119,7 @@ function handleDelete(id) {
 
 // Lägg till formulär
 
-
+/*
 const form = document.getElementById("myForm");
 
 form.addEventListener("submit", responseModal)
@@ -121,7 +132,7 @@ function responseModal (e) {
   fetch()
 
 
-}
+}*/
 
 
 const inputCRUD = document.getElementsByTagName("input");
