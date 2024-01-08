@@ -29,6 +29,7 @@ fetch(url)
       eventArray.forEach((event, index) => {
       // Skapa li-element och fyll det med användarinformation
         const listItem = document.createElement("li");
+        listItem.style.listStyle = "none";
         listItem.innerHTML = `
         ${event.titel}<br>
         Datum: ${event.datum}<br>
@@ -109,19 +110,19 @@ function handleDelete(id) {
 // Lägg till formulär
 
 
-const form = document.getElementById("myForm");
+// const form = document.getElementById("myForm");
 
-form.addEventListener("submit", responseModal)
+// form.addEventListener("submit", responseModal)
 
-function responseModal (e) {
-  e.preventDefault();
+// function responseModal (e) {
+//   e.preventDefault();
 
-  const eventData = {form.eventNameInput.value}
+//   const eventData = {form.eventNameInput.value}
 
-  fetch()
+//   fetch()
 
 
-}
+// }
 
 
 const inputCRUD = document.getElementsByTagName("input");
