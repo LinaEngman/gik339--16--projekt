@@ -93,11 +93,6 @@ const form = document.getElementById('myForm');
 
 form.addEventListener('submit', handleAdd);
 
-
-<<<<<<< HEAD
-=======
-
->>>>>>> b959b1c6cc90845d2c3a1fbb6b79b073ead1e134
 function handleAdd(e) {
   e.preventDefault();
   console.log(e);
