@@ -76,6 +76,7 @@ function handleDelete(id) {
       console.error("Fetch error:", error);
     });
 }
+// linas delete
 // function handleDelete(event) {
 //   const id = event.target.id; // Antag att id är en egenskap i event-objektet
   
@@ -123,6 +124,10 @@ function handleAdd() {
   });
 
   fetch(request)
+
+  fetch(`http://localhost:3000/events/`, {method: 'POST', headers: {'content-type': 'application/json' }, 
+  body: jsonData
+})
  .then((response) => {
   if (!response.ok) {
     throw new Error(`Network response was not ok, status code: ${response.status}`);
