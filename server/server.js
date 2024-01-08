@@ -35,7 +35,6 @@ server
         }
       });
     }
-    
   });
 
 // Hämta alla (get)
