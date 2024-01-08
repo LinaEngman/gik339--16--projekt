@@ -120,22 +120,31 @@ function handleDelete(id) {
 
 // Lägg till formulär
 
+
+
+
 /*
-const form = document.getElementById("myForm");
+function handleAdd() {
+  e.preventDefault();
 
-// const form = document.getElementById("myForm");
+  const form = document.getElementById('myForm');
 
-// form.addEventListener("submit", responseModal)
+  const formInput = new FormData(form);
+ 
+  for (const p of formInput.entries()) {
 
-// function responseModal (e) {
-//   e.preventDefault();
+    // const data = { titel : , datum: ,  }
 
-//   const eventData = {form.eventNameInput.value}
+    console.log(p);
+  };
 
-//   fetch()
+  fetch(`http://localhost:3000/events/`, {method: 'POST', headers= {"'content-type': 'application/json' }, 
+  body: jsonData})
 
+  .then()
 
-}*/
+}
+*/
 
 
 const inputCRUD = document.getElementsByTagName("input");
