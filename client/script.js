@@ -115,17 +115,17 @@ function handleAdd() {
   const addEvent = { titel: formInput.get("title"), datum: formInput.get("date"), plats: formInput.get(""), tid: formInput.get("time")}
   const jsonData = JSON.stringify(addEvent);
 
-    console.log(addEvent)
+  console.log(addEvent)
   
 
   fetch(`http://localhost:3000/events/`, {method: 'POST', headers: {'content-type': 'application/json' }, 
   body: jsonData
 })
- .then((response) =>
+ .then((response) => {
   if (!response.ok) {
-
+    throw new Error(`Network response was not ok, status code: ${response.status}`);
   }
- )
+})
 
 }
 
