@@ -35,7 +35,8 @@ fetch(url)
         Datum: ${event.datum}<br>
         Plats: ${event.plats}<br>
         Tid: ${event.tid}<br>
-        `;
+        <button onclick="handleEdit(${event.id})">Redigera</button>
+        <button onclick="handleDelete(${event.id})">Ta bort</button>`;
         // <button onclick="handleEdit(${event.id})">Redigera</button>
         // <button onclick="handleDelete(${event.id})">Ta bort</button>
   
