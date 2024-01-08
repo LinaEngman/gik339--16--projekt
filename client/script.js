@@ -115,11 +115,14 @@ function handleAdd() {
   const jsonData = JSON.stringify(addEvent);
 
   console.log(addEvent)
-  
 
-  fetch(`http://localhost:3000/events/`, {method: 'POST', headers: {'content-type': 'application/json' }, 
-  body: jsonData
-})
+  const request = new Request(url, {
+    method: 'POST',
+    headers: {'content-type': 'application/json' },
+    body: jsonData
+  });
+
+  fetch(request)
  .then((response) => {
   if (!response.ok) {
     throw new Error(`Network response was not ok, status code: ${response.status}`);
@@ -128,32 +131,4 @@ function handleAdd() {
 
 }
 
-
-
-const inputCRUD = document.getElementsByTagName("input");
-
-/* for (i = 0 ; i < inputCRUD.length ; i++) {
-
-   if ( inputCRUD[i].id === "buttonAdd", "buttonUpdate") {
-    inputCRUD[i].addEventListener("submit", responseModal);
-   }
-
-  } */
-
-//const myModal = document.getElementById('modalPopUp');
-//const button = document.getElementById('testButton');
-
-// button.addEventListener('click', modalFunc);
-
-/* function modalFunc (e) {
-  console.log(e);
-  myModal.showModal();
-} */
-
-/* function modalFunc () {
-
-} */
-
 // Eventet "submit" kan användas för att visa medddelande rutan sen.
-
-  // ${"form"}.on('submit', () => $(".modal").show());
