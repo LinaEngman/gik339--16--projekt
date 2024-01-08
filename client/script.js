@@ -57,55 +57,8 @@ fetch(url)
       console.error("Fetch error:", error);
     });
 
-// // funktion för att skapa event
-// function addNewEvent(newEvent) {
-//   fetch("http://localhost:3000/events", {
-//     method: "POST",
-//     headers: {
-//       "Content-Type": "application/json",
-//     },
-//     body: JSON.stringify(newEvent),
-//   })
-//     .then((response) => {
-//       if (!response.ok) {
-//         throw new Error(`Network response was not ok, status code: ${response.status}`);
-//       }
-//       // Uppdatera listan och DOM-trädet efter att ha lagt till evenemanget
-//       updateEventList();
-//       console.log("Evenemang har lagts till i databasen");
-//     })
-//     .catch((error) => {
-//       console.error("Fetch error:", error);
-//     });
-// }
-
-
 // Funktion för att hantera redigering (oklar)
-function fillFormWithResourceData(resourceData) {
-  document.getElementById('eventNameInput').value = resourceData.titel;
-  document.getElementById('eventDateInput').value = resourceData.datum;
-  document.getElementById('eventTimeInput').value = resourceData.tid;
-}
 
-function handleEdit(id) {
-  // Implementera din logik för redigering här
-  console.log(`Redigera resurs med ID ${id}`);
-  
-  fetch(`http://localhost:3000/events/${id}`, )
-    .then((response)=> {
-      if (!response.ok) {
-        throw new Error(`Network response was not ok, status code: ${response.status}`);
-      }
-      return response.json();
-})
-.then((resourceData) => {
-  saveResourceId(id);
-  fillFormWithResourceData(resourceData);
-})
-.catch((error) => {
-  console.error('Fetch error:', error);
-});
-}
 
 
 
