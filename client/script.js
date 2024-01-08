@@ -29,6 +29,7 @@ fetch(url)
       eventArray.forEach((event, index) => {
       // Skapa li-element och fyll det med användarinformation
         const listItem = document.createElement("li");
+        listItem.style.listStyle = "none";
         listItem.innerHTML = `
         ${event.titel}<br>
         Datum: ${event.datum}<br>
@@ -122,14 +123,16 @@ function handleDelete(id) {
 /*
 const form = document.getElementById("myForm");
 
-form.addEventListener("submit", responseModal)
+// const form = document.getElementById("myForm");
 
-function responseModal (e) {
-  e.preventDefault();
+// form.addEventListener("submit", responseModal)
 
-  const eventData = {form.eventNameInput.value}
+// function responseModal (e) {
+//   e.preventDefault();
 
-  fetch()
+//   const eventData = {form.eventNameInput.value}
+
+//   fetch()
 
 
 }*/
@@ -160,12 +163,5 @@ const inputCRUD = document.getElementsByTagName("input");
 } */
 
 // Eventet "submit" kan användas för att visa medddelande rutan sen.
-
-myModal.addEventListener('shown.bs.modal', (e) => {
-  console.log(e)
-  button.focus()
-});
-
-
 
   // ${"form"}.on('submit', () => $(".modal").show());
