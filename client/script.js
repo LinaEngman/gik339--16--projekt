@@ -81,19 +81,32 @@ fetch(url)
 
 
 // Funktion för att hantera redigering (oklar)
+function fillFormWithResourceData(resourceData) {
+  document.getElementById('eventNameInput').value = resourceData.titel;
+  document.getElementById('eventDateInput').value = resourceData.datum;
+  document.getElementById('eventTimeInput').value = resourceData.tid;
+}
+
 function handleEdit(id) {
   // Implementera din logik för redigering här
   console.log(`Redigera resurs med ID ${id}`);
   
-  fetch(`http://localhost:3000/events/${id}`, {
-    method: "UPDATE",
+  fetch(`http://localhost:3000/events/${id}`, )
+    .then((response)=> {
+      if (!response.ok) {
+        throw new Error(`Network response was not ok, status code: ${response.status}`);
+      }
+      return response.json();
 })
-.then((response)=> {
-  if (!response.ok) {
-    throw new Error(`Network response was not ok, status code: ${response.status}`);
-  }
+.then((resourceData) => {
+  saveResourceId(id);
+  fillFormWithResourceData(resourceData);
 })
+.catch((error) => {
+  console.error('Fetch error:', error);
+});
 }
+
 
 
 // Funktion för att hantera borttagning
