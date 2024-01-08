@@ -136,28 +136,28 @@ function handleDelete(id) {
 
 
 
-/*
+
 function handleAdd() {
   e.preventDefault();
 
   const form = document.getElementById('myForm');
 
   const formInput = new FormData(form);
- 
-  for (const p of formInput.entries()) {
 
-    // const data = { titel : , datum: ,  }
+  const addEvent = { titel: formInput.get("title"), datum: formInput.get("date"), plats: formInput.get(""), tid: formInput.get("time")}
+  const jsonData = JSON.stringify(addEvent);
 
-    console.log(p);
-  };
+    console.log(data);
+  
 
-  fetch(`http://localhost:3000/events/`, {method: 'POST', headers= {"'content-type': 'application/json' }, 
-  body: jsonData})
-
-  .then()
+  fetch(`http://localhost:3000/events/`, {method: 'POST', headers: {'content-type': 'application/json' }, 
+  body: jsonData
+})
+ .then((response) => response.json())
+ .then()
 
 }
-*/
+
 
 
 const inputCRUD = document.getElementsByTagName("input");
