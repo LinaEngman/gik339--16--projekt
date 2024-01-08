@@ -60,7 +60,8 @@ fetch(url)
 
 // Funktion för att hantera redigering (oklar)
 
-//kajsas delete vvvv
+//__________kajsas delete____________
+
 //Funktion för att hantera borttagning
 function handleDelete(id) {
     fetch(`http://localhost:3000/events/${id}`, {
