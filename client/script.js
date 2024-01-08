@@ -58,6 +58,10 @@ fetch(url)
 
 // Funktion för att hantera redigering (oklar)
 
+const deleteTest = document.getElementById("test");
+
+deleteTest.addEventListener("click", handleDelete)
+
 
 //Funktion för att hantera borttagning
 function handleDelete(id) {
@@ -69,7 +73,7 @@ function handleDelete(id) {
         throw new Error(`Network response was not ok, status code: ${response.status}`);
       }
       // Uppdatera listan och DOM-trädet efter borttagning
-      updateEventList();
+      //updateEventList();
       console.log(`Event med ID ${id} borttaget framgångsrikt`);
     })
     .catch((error) => {
