@@ -107,15 +107,17 @@ const form = document.getElementById('myForm');
 form.addEventListener('submit', handleAdd);
 
 
-function handleAdd() {
+
+function handleAdd(e) {
   e.preventDefault();
+  console.log(e);
 
   const formInput = new FormData(form);
 
   const addEvent = { titel: formInput.get("title"), datum: formInput.get("date"), plats: formInput.get(""), tid: formInput.get("time")}
   const jsonData = JSON.stringify(addEvent);
 
-  console.log(addEvent)
+  console.log(jsonData)
 
   const request = new Request(url, {
     method: 'POST',
@@ -124,10 +126,6 @@ function handleAdd() {
   });
 
   fetch(request)
-
-  fetch(`http://localhost:3000/events/`, {method: 'POST', headers: {'content-type': 'application/json' }, 
-  body: jsonData
-})
  .then((response) => {
   if (!response.ok) {
     throw new Error(`Network response was not ok, status code: ${response.status}`);
