@@ -35,8 +35,7 @@ fetch(url)
         Datum: ${event.datum}<br>
         Plats: ${event.plats}<br>
         Tid: ${event.tid}<br>
-        <button onclick="handleEdit(${event.id})">Redigera</button>
-        <button onclick="handleDelete(${event.id})">Ta bort</button>`;
+`;
   
       // Lägg till li-elementet i ul-elementet
       eventList.appendChild(listItem);
@@ -57,75 +56,44 @@ fetch(url)
       console.error("Fetch error:", error);
     });
 
-// // funktion för att skapa event
-// function addNewEvent(newEvent) {
-//   fetch("http://localhost:3000/events", {
-//     method: "POST",
-//     headers: {
-//       "Content-Type": "application/json",
-//     },
-//     body: JSON.stringify(newEvent),
+// Funktion för att hantera redigering (oklar)
+
+
+// Funktion för att hantera borttagning
+// function handleDelete(id) {
+//     fetch(`http://localhost:3000/events/${id}`, {
+//     method: "DELETE",
 //   })
 //     .then((response) => {
 //       if (!response.ok) {
 //         throw new Error(`Network response was not ok, status code: ${response.status}`);
 //       }
-//       // Uppdatera listan och DOM-trädet efter att ha lagt till evenemanget
+//       // Uppdatera listan och DOM-trädet efter borttagning
 //       updateEventList();
-//       console.log("Evenemang har lagts till i databasen");
+//       console.log(`Event med ID ${id} borttaget framgångsrikt`);
 //     })
 //     .catch((error) => {
 //       console.error("Fetch error:", error);
 //     });
+
 // }
-
-
-// Funktion för att hantera redigering (oklar)
-function fillFormWithResourceData(resourceData) {
-  document.getElementById('eventNameInput').value = resourceData.titel;
-  document.getElementById('eventDateInput').value = resourceData.datum;
-  document.getElementById('eventTimeInput').value = resourceData.tid;
-}
-
-function handleEdit(id) {
-  // Implementera din logik för redigering här
-  console.log(`Redigera resurs med ID ${id}`);
+function handleDelete(event) {
+  const id = event.target.id; // Antag att id är en egenskap i event-objektet
   
-  fetch(`http://localhost:3000/events/${id}`, )
-    .then((response)=> {
-      if (!response.ok) {
-        throw new Error(`Network response was not ok, status code: ${response.status}`);
-      }
-      return response.json();
-})
-.then((resourceData) => {
-  saveResourceId(id);
-  fillFormWithResourceData(resourceData);
-})
-.catch((error) => {
-  console.error('Fetch error:', error);
-});
-}
-
-
-
-// Funktion för att hantera borttagning
-function handleDelete(id) {
-    fetch(`http://localhost:3000/events/${id}`, {
-    method: "DELETE",
+  fetch(`http://localhost:3000/events/${id}`, {
+      method: "DELETE",
   })
-    .then((response) => {
+  .then((response) => {
       if (!response.ok) {
-        throw new Error(`Network response was not ok, status code: ${response.status}`);
+          throw new Error(`Network response was not ok, status code: ${response.status}`);
       }
       // Uppdatera listan och DOM-trädet efter borttagning
       updateEventList();
       console.log(`Event med ID ${id} borttaget framgångsrikt`);
-    })
-    .catch((error) => {
+  })
+  .catch((error) => {
       console.error("Fetch error:", error);
-    });
-
+  });
 }
 
 //--------------- Formulär ---------------
