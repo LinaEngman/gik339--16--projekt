@@ -150,11 +150,4 @@ const inputCRUD = document.getElementsByTagName("input");
 
 // Eventet "submit" kan användas för att visa medddelande rutan sen.
 
-myModal.addEventListener('shown.bs.modal', (e) => {
-  console.log(e)
-  button.focus()
-});
-
-
-
   // ${"form"}.on('submit', () => $(".modal").show());
