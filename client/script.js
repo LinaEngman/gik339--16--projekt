@@ -60,32 +60,49 @@ fetch(url)
 
 // Funktion för att hantera redigering (oklar)
 
-
-
-//Funktion för att hantera borttagning
-function handleDelete(id) {
-    fetch(`http://localhost:3000/events/${id}`, {
+// // Funktion för att hantera borttagning orginal
+// function handleDelete(id) {
+//     fetch(`http://localhost:3000/events/${id}`, {
+//     method: "DELETE",
+//   })
+//     .then((response) => {
+//       if (!response.ok) {
+//         throw new Error(`Network response was not ok, status code: ${response.status}`);
+//       }
+//       // Uppdatera listan och DOM-trädet efter borttagning
+//       //updateEventList();
+//       console.log(`Event med ID ${id} borttaget framgångsrikt`);
+//     })
+//     .catch((error) => {
+//       console.error("Fetch error:", error);
+//     })
+//   }
+// // Funktion för att hantera borttagning nya
+function handleDelete(event) {
+  const id = event.id;
+  fetch(`http://localhost:3000/events/${id}`, {
     method: "DELETE",
   })
-  
     .then((response) => {
       if (!response.ok) {
         throw new Error(`Network response was not ok, status code: ${response.status}`);
       }
       // Uppdatera listan och DOM-trädet efter borttagning
-      //updateEventList();
       console.log(`Event med ID ${id} borttaget framgångsrikt`);
     })
     .catch((error) => {
       console.error("Fetch error:", error);
-    })
-  }
+    });
+}
 
-//_________________linas delete____________
+//koppla delete funktion till knappen
+const deleteTest = document.getElementById("test1");
 
+deleteTest.addEventListener("click", function(event) {
+  handleDelete(event);
+});
 
-
-//--------------- Formulär ---------------
+//--------------- Formulär -----------------
 
 
 // Lägg till formulär
