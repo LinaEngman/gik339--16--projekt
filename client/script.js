@@ -35,7 +35,9 @@ fetch(url)
         Datum: ${event.datum}<br>
         Plats: ${event.plats}<br>
         Tid: ${event.tid}<br>
-`;
+        `;
+        // <button onclick="handleEdit(${event.id})">Redigera</button>
+        // <button onclick="handleDelete(${event.id})">Ta bort</button>
   
       // Lägg till li-elementet i ul-elementet
       eventList.appendChild(listItem);
@@ -58,43 +60,35 @@ fetch(url)
 
 // Funktion för att hantera redigering (oklar)
 
+const deleteTest = document.getElementById("test");
+
+deleteTest.setAttribute("onclick", `${event.id}`)
+
+deleteTest.addEventListener("click", handleDelete)
+
 
 //Funktion för att hantera borttagning
 function handleDelete(id) {
     fetch(`http://localhost:3000/events/${id}`, {
     method: "DELETE",
   })
+  
     .then((response) => {
       if (!response.ok) {
         throw new Error(`Network response was not ok, status code: ${response.status}`);
       }
       // Uppdatera listan och DOM-trädet efter borttagning
-      updateEventList();
+      //updateEventList();
       console.log(`Event med ID ${id} borttaget framgångsrikt`);
     })
     .catch((error) => {
       console.error("Fetch error:", error);
-    });
-}
-// linas delete
-// function handleDelete(event) {
-//   const id = event.target.id; // Antag att id är en egenskap i event-objektet
-  
-//   fetch(`http://localhost:3000/events/${id}`, {
-//       method: "DELETE",
-//   })
-//   .then((response) => {
-//       if (!response.ok) {
-//           throw new Error(`Network response was not ok, status code: ${response.status}`);
-//       }
-//       // Uppdatera listan och DOM-trädet efter borttagning
-//       updateEventList();
-//       console.log(`Event med ID ${id} borttaget framgångsrikt`);
-//   })
-//   .catch((error) => {
-//       console.error("Fetch error:", error);
-//   });
-// }
+    })
+  }
+
+//_________________linas delete____________
+
+
 
 //--------------- Formulär ---------------
 
@@ -106,16 +100,16 @@ const form = document.getElementById('myForm');
 
 form.addEventListener('submit', handleAdd);
 
-
-function handleAdd() {
+function handleAdd(e) {
   e.preventDefault();
+  console.log(e);
 
   const formInput = new FormData(form);
 
   const addEvent = { titel: formInput.get("title"), datum: formInput.get("date"), plats: formInput.get(""), tid: formInput.get("time")}
   const jsonData = JSON.stringify(addEvent);
 
-  console.log(addEvent)
+  console.log(jsonData)
 
   const request = new Request(url, {
     method: 'POST',
@@ -124,10 +118,6 @@ function handleAdd() {
   });
 
   fetch(request)
-
-  fetch(`http://localhost:3000/events/`, {method: 'POST', headers: {'content-type': 'application/json' }, 
-  body: jsonData
-})
  .then((response) => {
   if (!response.ok) {
     throw new Error(`Network response was not ok, status code: ${response.status}`);
