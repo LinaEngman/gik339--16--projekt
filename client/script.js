@@ -35,8 +35,7 @@ fetch(url)
         Datum: ${event.datum}<br>
         Plats: ${event.plats}<br>
         Tid: ${event.tid}<br>
-        <button onclick="handleEdit(${event.id})">Redigera</button>
-        <button onclick="handleDelete(${event.id})">Ta bort</button>`;
+        `;
         // <button onclick="handleEdit(${event.id})">Redigera</button>
         // <button onclick="handleDelete(${event.id})">Ta bort</button>
   
@@ -61,9 +60,6 @@ fetch(url)
 
 // Funktion för att hantera redigering (oklar)
 
-const deleteTest = document.getElementById("test");
-
-deleteTest.addEventListener("click", handleDelete)
 
 
 //Funktion för att hantera borttagning
