@@ -95,10 +95,6 @@ function handleDelete(event) {
     });
 }
 
-//_________________linas delete____________
-
-
-
 //--------------- Formulär ---------------
 
 
@@ -118,8 +114,8 @@ function handleUpdate(id) {
   .then((test) => {
     return test.json()
   })
-  .then((test2) => 
-  );
+  .then((test2) => {}
+    );
 
     // Lägger in den nya datan
 
