@@ -58,9 +58,7 @@ fetch(url)
       console.error("Fetch error:", error);
     });
 
-// Funktion för att hantera redigering (oklar)
-
-
+//--------------- Formulär ---------------
 
 //Funktion för att hantera borttagning
 function handleDelete(id) {
@@ -84,16 +82,44 @@ function handleDelete(id) {
 //_________________linas delete____________
 
 
-
-//--------------- Formulär ---------------
-
-
 // Lägg till formulär
 
 
 const form = document.getElementById('myForm');
 
-form.addEventListener('submit', handleAdd);
+// Cardsen måste flyttas in i form för att detta ska fungera.
+form.addEventListener('submit', handleAdd, handleUpdate);
+
+// Funktion för att hantera redigering (oklar)
+
+function handleUpdate(id) {
+
+  fetch(url)
+  .then((test) => {
+    return test.json()
+  })
+  .then((test2) => 
+  );
+
+    // Lägger in den nya datan
+
+    const updateData = {titel: formInput.get("title"), datum: formInput.get("date"), plats: formInput.get(""), tid: formInput.get("time")}
+
+
+    const convertedData = JSON.stringify(updateData);
+    
+    const request = new Request(url, {
+      method: 'PUT',
+      headers: {'content-type': 'application/json' },
+      body: convertedData
+    });
+  
+    fetch(request)
+   .then((response) => {
+    if (!response.ok) {
+      throw new Error(`Network response was not ok, status code: ${response.status}`);
+    }
+  }) }
 
 function handleAdd(e) {
   e.preventDefault();
