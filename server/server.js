@@ -38,7 +38,7 @@ server
   });
 
 // Hämta alla (get)
-server.get('/', (req, res) => { //: Vi sätter upp en route för HTTP GET-förfrågningar till rotvägen ("/"). När någon gör en förfrågan till den vägen, körs den angivna funktionen med två parametrar req (för begäran) och res (för svar). I funktionen extraheras HTTP-metoden och URL-en från begäran (req) och sedan skickas ett svar (res.send()) tillbaka till klienten med information om den mottagna förfrågan
+server.get('/events/get', (req, res) => { 
   const method = req.method;
   const url = req.url;
   res.send(`du gjorde en ${method}-förfrågan till url:en ${url}`);

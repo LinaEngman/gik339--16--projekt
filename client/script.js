@@ -35,9 +35,8 @@ fetch(url)
         Datum: ${event.datum}<br>
         Plats: ${event.plats}<br>
         Tid: ${event.tid}<br>
-        `;
-        // <button onclick="handleEdit(${event.id})">Redigera</button>
-        // <button onclick="handleDelete(${event.id})">Ta bort</button>
+        <button class="btn btn-primary buttonUpdate" type="submit" onclick="handleEdit(${event.id})">Redigera</button>
+        <button class="btn btn-danger buttonRemove" onclick="handleDelete(${event.id})">Ta bort</button>`;
   
       // Lägg till li-elementet i ul-elementet
       eventList.appendChild(listItem);
@@ -58,29 +57,66 @@ fetch(url)
       console.error("Fetch error:", error);
     });
 
-// Funktion för att hantera redigering (oklar)
+// Funktion för att hantera redigering
+function handleEdit(eventId) {
+  console.log("Hantering av redigering startad.");
+  selectedEventId = eventId;
+  console.log(`Hanterar redigering för event med ID:`, eventId);
+fetch('http://localhost:3000/events')
+  .then((response) => {
+    console.log("Fetch-anropet lyckades.");
+    if (!response.ok) {
+      throw new Error(`Network response was not ok, status code: ${response.status}`);
+    }
+    return response.json();
+  })
 
-// // Funktion för att hantera borttagning orginal
-// function handleDelete(id) {
-//     fetch(`http://localhost:3000/events/${id}`, {
-//     method: "DELETE",
-//   })
-//     .then((response) => {
-//       if (!response.ok) {
-//         throw new Error(`Network response was not ok, status code: ${response.status}`);
-//       }
-//       // Uppdatera listan och DOM-trädet efter borttagning
-//       //updateEventList();
-//       console.log(`Event med ID ${id} borttaget framgångsrikt`);
-//     })
-//     .catch((error) => {
-//       console.error("Fetch error:", error);
-//     })
-//   }
-// // Funktion för att hantera borttagning nya
-function handleDelete(event) {
-  const id = event.id;
-  fetch(`http://localhost:3000/events/${id}`, {
+  .then((data) => {
+    // Fyll i formulärets fält med befintlig data
+    document.getElementById('eventNameInput').value = data.titel;
+    document.getElementById('eventDateInput').value = data.datum;
+    document.getElementById(`eventPlaceInput`).value = data.plats;
+    document.getElementById('eventTimeInput').value = data.tid;
+  })
+  .catch((error) => {
+    console.error("Fetch error:", error);
+  });
+  if (!selectedEventId) {
+    console.error("Selected event ID is undefined");
+    return;
+  }
+  console.log("Selected Event ID:", selectedEventId)
+  // Hämta uppdaterade värden från formuläret
+  const updatedEvent = {
+    titel: document.getElementById('eventNameInput').value,
+    datum: document.getElementById('eventDateInput').value,
+    plats: document.getElementById('eventPlaceInput').value,
+    tid: document.getElementById('eventTimeInput').value,
+  };
+
+  // Skicka uppdaterad data till servern
+  fetch(`http://localhost:3000/events/${selectedEventId}`, {
+    method: 'PUT',
+    headers: { 'content-type': 'application/json' },
+    body: JSON.stringify(updatedEvent)
+  })
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error(`Network response was not ok, status code: ${response.status}`);
+      }
+      return response.json(); 
+    })
+    .then((data) => {
+      console.log(data); // logga data från servern
+    })
+    .catch((error) => {
+      console.error("Fetch error:", error);
+    });
+}
+
+//Funktion för att hantera borttagning 
+function handleDelete(id) {
+    fetch(`http://localhost:3000/events/${id}`, {
     method: "DELETE",
   })
     .then((response) => {
@@ -88,54 +124,22 @@ function handleDelete(event) {
         throw new Error(`Network response was not ok, status code: ${response.status}`);
       }
       // Uppdatera listan och DOM-trädet efter borttagning
+      //updateEventList();
       console.log(`Event med ID ${id} borttaget framgångsrikt`);
     })
     .catch((error) => {
       console.error("Fetch error:", error);
-    });
-}
+    })
+  }
 
 //--------------- Formulär ---------------
 
-
 // Lägg till formulär
-
-
 const form = document.getElementById('myForm');
 
 // Cardsen måste flyttas in i form för att detta ska fungera.
-form.addEventListener('submit', handleAdd, handleUpdate);
+form.addEventListener('submit', handleAdd, handleEdit);
 
-// Funktion för att hantera redigering (oklar)
-
-function handleUpdate(id) {
-
-  fetch(url)
-  .then((test) => {
-    return test.json()
-  })
-  .then((test2) => {}
-    );
-
-    // Lägger in den nya datan
-
-    const updateData = {titel: formInput.get("title"), datum: formInput.get("date"), plats: formInput.get(""), tid: formInput.get("time")}
-
-
-    const convertedData = JSON.stringify(updateData);
-    
-    const request = new Request(url, {
-      method: 'PUT',
-      headers: {'content-type': 'application/json' },
-      body: convertedData
-    });
-  
-    fetch(request)
-   .then((response) => {
-    if (!response.ok) {
-      throw new Error(`Network response was not ok, status code: ${response.status}`);
-    }
-  }) }
 
 function handleAdd(e) {
   e.preventDefault();
@@ -143,7 +147,7 @@ function handleAdd(e) {
 
   const formInput = new FormData(form);
 
-  const addEvent = { titel: formInput.get("title"), datum: formInput.get("date"), plats: formInput.get(""), tid: formInput.get("time")}
+  const addEvent = { titel: formInput.get("title"), datum: formInput.get("date"), plats: formInput.get("place"), tid: formInput.get("time")}
   const jsonData = JSON.stringify(addEvent);
 
   console.log(jsonData)
