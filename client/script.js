@@ -35,8 +35,8 @@ fetch(url)
         Datum: ${event.datum}<br>
         Plats: ${event.plats}<br>
         Tid: ${event.tid}<br>
-        <button class="btn btn-primary buttonUpdate" type="submit" onclick="handleEdit(${event.id})">Redigera</button>
-        <button class="btn btn-danger buttonRemove" onclick="handleDelete(${event.id})">Ta bort</button>`;
+        <button class="btn btn-primary buttonUpdate" type="submit" onclick="handleEdit(${event.id}), showModal()">Redigera</button>
+        <button class="btn btn-danger buttonRemove" onclick="handleDelete(${event.id}), showModal()">Ta bort</button>`;
   
       // Lägg till li-elementet i ul-elementet
       eventList.appendChild(listItem);
@@ -166,5 +166,20 @@ function handleAdd(e) {
 })
 
 }
+
+// Kod till modal
+
+const inputFields = document.getElementsByClassName("form-control");
+const buttonAdd = document.getElementById("buttonAdd");
+const myModal = new bootstrap.Modal('#modalPopUp');
+
+buttonAdd.addEventListener('click', showModal)
+
+// form.addEventListener('submit', showModal)
+
+function showModal (e) {
+  // e.preventDefault();
+    myModal.show();
+  }
 
 // Eventet "submit" kan användas för att visa medddelande rutan sen.
