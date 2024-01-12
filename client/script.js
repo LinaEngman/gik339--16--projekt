@@ -1,3 +1,4 @@
+let selectedEventId;
 const url = "http://localhost:3000/events"
 fetch(url)
 
@@ -31,12 +32,12 @@ fetch(url)
         const listItem = document.createElement("li");
         listItem.style.listStyle = "none";
         listItem.innerHTML = `
-        ${event.titel}<br>
+        Titel: ${event.titel}<br>
         Datum: ${event.datum}<br>
         Plats: ${event.plats}<br>
         Tid: ${event.tid}<br>
-        <button class="btn btn-primary buttonUpdate" type="submit" onclick="handleEdit(${event.id}), showModal()">Redigera</button>
-        <button class="btn btn-danger buttonRemove" onclick="handleDelete(${event.id}), showModal()">Ta bort</button>`;
+        <button class="btn btn-primary buttonUpdate" type="submit" onclick="handleEdit(${event.id})">Redigera</button>
+        <button class="btn btn-danger buttonRemove" onclick="handleDelete(${event.id})">Ta bort</button>`;
   
       // Lägg till li-elementet i ul-elementet
       eventList.appendChild(listItem);
@@ -48,6 +49,7 @@ fetch(url)
   });
       // Lägg till ul-elementet i body eller där du vill ha det i DOM-trädet
       document.body.appendChild(eventList);
+      
       // Logga resultatet
       console.log(eventArray);
       console.log(jsonData);
@@ -57,6 +59,9 @@ fetch(url)
       console.error("Fetch error:", error);
     });
 
+
+
+//----------Kajsas redigering-----------------
 // Funktion för att hantera redigering
 function handleEdit(eventId) {
   console.log("Hantering av redigering startad.");
@@ -70,10 +75,9 @@ fetch('http://localhost:3000/events')
     }
     return response.json();
   })
-
   .then((data) => {
     // Fyll i formulärets fält med befintlig data
-    document.getElementById('eventNameInput').value = data.titel;
+    document.getElementById('eventNameInput').value = data.titel; //ändrade så att det är namnet ist för id:et vilket känns lite knas men ett errormeddelande försvann
     document.getElementById('eventDateInput').value = data.datum;
     document.getElementById(`eventPlaceInput`).value = data.plats;
     document.getElementById('eventTimeInput').value = data.tid;
@@ -113,11 +117,13 @@ fetch('http://localhost:3000/events')
       console.error("Fetch error:", error);
     });
 }
+//----------------------------------------------------
 
-//Funktion för att hantera borttagning 
+//Funktion för att hantera borttagning ------------
 function handleDelete(id) {
     fetch(`http://localhost:3000/events/${id}`, {
     method: "DELETE",
+    
   })
     .then((response) => {
       if (!response.ok) {
@@ -129,17 +135,16 @@ function handleDelete(id) {
     })
     .catch((error) => {
       console.error("Fetch error:", error);
-    })
+    });
   }
 
+//-----------------------------------------------------------
+
 //--------------- Formulär ---------------
-
 // Lägg till formulär
+
 const form = document.getElementById('myForm');
-
-// Cardsen måste flyttas in i form för att detta ska fungera.
 form.addEventListener('submit', handleAdd, handleEdit);
-
 
 function handleAdd(e) {
   e.preventDefault();
@@ -164,7 +169,6 @@ function handleAdd(e) {
     throw new Error(`Network response was not ok, status code: ${response.status}`);
   }
 })
-
 }
 
 // Kod till modal
@@ -173,13 +177,35 @@ const inputFields = document.getElementsByClassName("form-control");
 const buttonAdd = document.getElementById("buttonAdd");
 const myModal = new bootstrap.Modal('#modalPopUp');
 
-buttonAdd.addEventListener('click', showModal)
-
-// form.addEventListener('submit', showModal)
-
 function showModal (e) {
-  // e.preventDefault();
+  e.preventDefault();
     myModal.show();
+    
   }
+buttonAdd.addEventListener('click', showModal);
 
-// Eventet "submit" kan användas för att visa medddelande rutan sen.
+const saveChangesBtn = document.getElementById('saveChangesBtn');
+saveChangesBtn.addEventListener('click', handleAdd );
+
+
+
+//_______försök till att koppla modalen till knappar_______
+
+// const myModalUp = new bootstrap.Modal('#modalPopUpUpdate');
+// const buttonUp = document.getElementById("buttonUp");
+// function showModalUp (e) {
+//   e.preventDefault();
+//     myModalUp.show();
+      
+//   }
+// buttonUp.addEventListener('click', showModalUp);
+
+
+// const myModalDel = new bootstrap.Modal('#modalPopUpDelete');
+// const buttonDel = document.getElementById("buttonDel");
+// function showModalDel (e) {
+//   e.preventDefault();
+//     myModalDel.show();
+//   }
+// buttonDel.addEventListener('click', showModalDel);
+
