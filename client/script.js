@@ -62,21 +62,23 @@ function handleEdit(eventId) {
   console.log("Hantering av redigering startad.");
   selectedEventId = eventId;
   console.log(`Hanterar redigering för event med ID:`, eventId);
-fetch('http://localhost:3000/events')
+fetch(`http://localhost:3000/events`)
   .then((response) => {
     console.log("Fetch-anropet lyckades.");
+    console.log(response)
     if (!response.ok) {
       throw new Error(`Network response was not ok, status code: ${response.status}`);
     }
-    return response.json();
+    return response.json()
   })
-
   .then((data) => {
     // Fyll i formulärets fält med befintlig data
-    document.getElementById('eventNameInput').value = data.titel;
-    document.getElementById('eventDateInput').value = data.datum;
-    document.getElementById(`eventPlaceInput`).value = data.plats;
-    document.getElementById('eventTimeInput').value = data.tid;
+    console.log(data)
+    currentData = data[0]
+    document.getElementById('eventNameInput').value = currentData.titel;
+    document.getElementById('eventDateInput').value = currentData.datum;
+    document.getElementById(`eventPlaceInput`).value = currentData.plats;
+    document.getElementById('eventTimeInput').value = currentData.tid;
   })
   .catch((error) => {
     console.error("Fetch error:", error);
@@ -93,25 +95,28 @@ fetch('http://localhost:3000/events')
     plats: document.getElementById('eventPlaceInput').value,
     tid: document.getElementById('eventTimeInput').value,
   };
-
-  // Skicka uppdaterad data till servern
-  fetch(`http://localhost:3000/events/${selectedEventId}`, {
-    method: 'PUT',
-    headers: { 'content-type': 'application/json' },
-    body: JSON.stringify(updatedEvent)
-  })
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error(`Network response was not ok, status code: ${response.status}`);
-      }
-      return response.json(); 
-    })
-    .then((data) => {
-      console.log(data); // logga data från servern
-    })
-    .catch((error) => {
-      console.error("Fetch error:", error);
-    });
+  console.log(updatedEvent)
+  // Skicka uppdaterad data till servernfor 
+  for (i = 0 ; i < inputFields.length ; i++) {
+    if (inputFields[i].value !== "") {
+      fetch(`http://localhost:3000/events/${selectedEventId}`, {
+        method: 'PUT',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify(updatedEvent)
+      })
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error(`Network response was not ok, status code: ${response.status}`);
+          }
+          return response.json(); 
+        })
+        .then((data) => {
+          console.log(data); // logga data från servern
+        })
+        .catch((error) => {
+          console.error("Fetch error:", error);
+      }); }
+  }
 }
 
 //Funktion för att hantera borttagning 
