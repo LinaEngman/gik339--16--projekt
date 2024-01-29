@@ -2,11 +2,11 @@ const sqlite3 = require("sqlite3").verbose();
 const express = require('express'); // importerar express-ramverket och tilldelar variabeln express
 const server = express(); //express-app skapas med anrop av express() och tilldelar den variabeln 'server'
 
-server
+server // Middleware och CORS!!
   .use(express.json())
   .use(express.urlencoded({ extended: false }))
   .use((req, res, next) => {
-    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Origin', '*'); 
     res.header('Access-Control-Allow-Headers', '*');
     res.header('Access-Control-Allow-Methods', '*');
 
