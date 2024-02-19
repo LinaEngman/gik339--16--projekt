@@ -13,9 +13,27 @@ function loadData() {
       }
       return response.json();
     })
-    .then((jsonData) => {
-      // Skapa en array av JavaScript-objekt som representerar användare
+    .then((jsonData) => { 
       console.log(jsonData);
+
+      const cardBodies = document.querySelectorAll(".card-body");
+
+      jsonData.forEach((event, index) => {
+
+        cardBodies[index].innerHTML = "";
+        cardBodies[index].innerHTML = `
+          Titel: ${event.titel}<br>
+          Datum: ${event.datum}<br>
+          Plats: ${event.plats}<br>
+          Tid: ${event.tid}<br>
+          <button class="btn btn-primary buttonUpdate" type="submit" onclick="handleEdit(${event.id})">Redigera</button>
+          <button class="btn btn-danger buttonRemove" onclick="handleDelete(${event.id})">Ta bort</button>`;
+
+        
+      });
+      
+      /*
+      // Skapa en array av JavaScript-objekt som representerar användare
       const eventArray = jsonData.map((event) => {
         return {
           id: event.id,
@@ -26,20 +44,26 @@ function loadData() {
         };
       });
 
-      console.log(eventArray);
-
-      // Skapa ett ul-element och ge det en klass
-      const eventList = document.createElement("ul");
-      eventList.classList.add("eventList");
       // Hämta alla card-body element
       const cardBodies = document.querySelectorAll(".card-body");
-
+      
+      
       // Loopa igenom användarobjekten och skapa li-element för varje
       eventArray.forEach((event, index) => {
+        cardBodies[index].innerHTML = "";
+        cardBodies[index].innerHTML = `
+          Titel: ${event.titel}<br>
+          Datum: ${event.datum}<br>
+          Plats: ${event.plats}<br>
+          Tid: ${event.tid}<br>
+          <button class="btn btn-primary buttonUpdate" type="submit" onclick="handleEdit(${event.id})">Redigera</button>
+          <button class="btn btn-danger buttonRemove" onclick="handleDelete(${event.id})">Ta bort</button>`;
+
+        /*
         // Skapa li-element och fyll det med användarinformation
         const listItem = document.createElement("li");
-        listItem.classList.add("item");
         listItem.style.listStyle = "none";
+
         listItem.innerHTML = `
           Titel: ${event.titel}<br>
           Datum: ${event.datum}<br>
@@ -48,24 +72,20 @@ function loadData() {
           <button class="btn btn-primary buttonUpdate" type="submit" onclick="handleEdit(${event.id})">Redigera</button>
           <button class="btn btn-danger buttonRemove" onclick="handleDelete(${event.id})">Ta bort</button>`;
 
-        // Lägg till li-elementet i ul-elementet
-        eventList.appendChild(listItem);
-        
         // Lägg till li-elementet i det matchande card-body
         // Koden som skapar dubbletter ligger under! <----------- 
-        if (cardBodies[index]) {
-          cardBodies[index].appendChild(listItem);
-        }
-      });
-
-      // Testad lösning för att undvika dubletter. Fungerar inte helt, add fungerar men resten ej.
-     /* if (cardBodies[index]) {
+        // Ta bort ul och ersätt il med div.
         const listContainer = document.createElement("ul");
-        //listContainer.innerHTML = "";
-        // Lägg till li-elementet i ul-elementet
-        listContainer.appendChild(listItem);
-        cardBodies[index].appendChild(listContainer);
-      } */
+
+        // if-satsen kan vara onödig.
+        if (cardBodies[index]) {
+          listContainer.appendChild(listItem);
+          cardBodies[index].appendChild(listContainer);
+        }
+        */
+      });
+      
+      
       // Ha ut cards på hemsidan med JavaScript
       /* const card = `<div class="col-sm-6 mb-3 mb-sm-0 p-2">
         <div class="card">
@@ -74,10 +94,7 @@ function loadData() {
         </div>
         </div> `
 
-        document.getElementById("listContainer").insertAdjacentHTML("beforeend", card) */
-
-      // Lägg till ul-elementet i body eller där du vill ha det i DOM-trädet
-      document.body.appendChild(eventList);
+        document.getElementById("listContainer").insertAdjacentHTML("beforeend", card) 
 
       // Logga resultatet
       console.log(eventArray);
@@ -86,8 +103,10 @@ function loadData() {
     .catch((error) => {
       // Hantera eventuella fel under hämtningen
       console.error("Fetch error:", error);
+      
     });
-}
+    */
+} 
 
 //----------Kajsas redigering-----------------
 // Funktion för att hantera redigering
