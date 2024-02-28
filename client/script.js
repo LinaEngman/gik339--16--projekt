@@ -14,22 +14,24 @@ function loadData() {
       return response.json();
     })
     .then((jsonData) => { 
-      console.log(jsonData);
-
-      const cardBodies = document.querySelectorAll(".card-body");
+     // console.log(jsonData);
 
       jsonData.forEach((event, index) => {
-
+        //console.log(index)
+        //console.log(event)
+        
+      const cardBodies = document.querySelectorAll(".card-body");
+        
         cardBodies[index].innerHTML = "";
         cardBodies[index].innerHTML = `
+          <h5 class="card-title">Händelse</h5>
           Titel: ${event.titel}<br>
           Datum: ${event.datum}<br>
           Plats: ${event.plats}<br>
           Tid: ${event.tid}<br>
           <button class="btn btn-primary buttonUpdate" type="submit" onclick="handleEdit(${event.id})">Redigera</button>
-          <button class="btn btn-danger buttonRemove" onclick="handleDelete(${event.id})">Ta bort</button>`;
-
-        
+          <button class="btn btn-danger buttonRemove" onclick="handleDelete(${event.id})">Ta bort</button>`; 
+          
       });
       
       /*
@@ -86,16 +88,7 @@ function loadData() {
       });
       
       
-      // Ha ut cards på hemsidan med JavaScript
-      /* const card = `<div class="col-sm-6 mb-3 mb-sm-0 p-2">
-        <div class="card">
-          <div class="card-body">
-            <h5 class="card-title">Händelse</h5></div>
-        </div>
-        </div> `
-
-        document.getElementById("listContainer").insertAdjacentHTML("beforeend", card) 
-
+      /* 
       // Logga resultatet
       console.log(eventArray);
       console.log(jsonData);
@@ -108,13 +101,13 @@ function loadData() {
     */
 } 
 
+
 //----------Kajsas redigering-----------------
 // Funktion för att hantera redigering
-function handleEdit(eventId) {
+ function handleEdit(eventId) {
   console.log("Hantering av redigering startad.");
-  selectedEventId = eventId;
   console.log(`Hanterar redigering för event med ID:`, eventId);
-  fetch(`http://localhost:3000/events`)
+  fetch(url)
     .then((response) => {
       console.log("Fetch-anropet lyckades.");
       console.log(response);
@@ -128,33 +121,34 @@ function handleEdit(eventId) {
     .then((data) => {
       // Fyll i formulärets fält med befintlig data
       console.log(data);
-      currentData = data[0];
+      // https://www.freecodecamp.org/news/javascript-array-of-objects-tutorial-how-to-create-update-and-loop-through-objects-using-js-array-methods/
+      let currentData = data.find( event => event.id === eventId);
+      console.log(currentData)
       document.getElementById("eventNameInput").value = currentData.titel; //ändrade så att det är namnet ist för id:et vilket känns lite knas men ett errormeddelande försvann
       document.getElementById("eventDateInput").value = currentData.datum;
       document.getElementById(`eventPlaceInput`).value = currentData.plats;
       document.getElementById("eventTimeInput").value = currentData.tid;
+
+      // Lagrar befintligt id för händelse som ska uppdateras i localstorage
+      localStorage.setItem('selectedEventId', eventId)
     })
     .catch((error) => {
       console.error("Fetch error:", error);
     });
-  if (!selectedEventId) {
+    // ----- Ta bort det som är nedan? -----
+    // ---> Om det här till...... <---
+
+    
+  if (!eventId) {
     console.error("Selected event ID is undefined");
     return;
   }
-  console.log("Selected Event ID:", selectedEventId);
-  // Hämta uppdaterade värden från formuläret
-  const updatedEvent = {
-    titel: document.getElementById("eventNameInput").value,
-    datum: document.getElementById("eventDateInput").value,
-    plats: document.getElementById("eventPlaceInput").value,
-    tid: document.getElementById("eventTimeInput").value,
-  };
-  console.log(updatedEvent);
-  // Skicka uppdaterad data till servernfor
-  // Loopen måste göras om så att den inte ger output från loadData() flera gånger.
+
+  console.log("Selected Event ID:", eventId);
+  /*
   for (i = 0 ; i < inputFields.length ; i++) {
   if (inputFields[i].value !== "") {
-  fetch(`http://localhost:3000/events/${selectedEventId}`, {
+  fetch(`${url}/${selectedEventId}`, {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(updatedEvent),
@@ -175,24 +169,23 @@ function handleEdit(eventId) {
       console.error("Fetch error:", error);
     });
 }
-}
+} */
 }
 //----------------------------------------------------
 
 //Funktion för att hantera borttagning ------------
 function handleDelete(id) {
-  fetch(`http://localhost:3000/events/${id}`, {
-    method: "DELETE",
+  fetch(`${url}/${id}`, {
+    method: "DELETE"
   })
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error(
-          `Network response was not ok, status code: ${response.status}`
-        );
-      }
-      loadData();
+  .then((response) => {
+   /* if (!response.ok) {
+      throw new Error(
+        `Network response was not ok, status code: ${response.status}`
+      );
+     } */
       // Uppdatera listan och DOM-trädet efter borttagning
-      //updateEventList();
+      loadData();
       console.log(`Event med ID ${id} borttaget framgångsrikt`);
     })
     .catch((error) => {
@@ -210,8 +203,7 @@ form.addEventListener("submit", handleAdd, handleEdit);
 
 function handleAdd(e) {
   e.preventDefault();
-  console.log(e);
-
+ 
   const formInput = new FormData(form);
 
   const addEvent = {
@@ -220,25 +212,36 @@ function handleAdd(e) {
     plats: formInput.get("place"),
     tid: formInput.get("time"),
   };
-  const jsonData = JSON.stringify(addEvent);
 
-  console.log(jsonData);
+  console.log(addEvent)
+ 
+  // Hämtar id från händelsen som ska redigeras men om en händelse istället läggs till blir id = null.
+  // För att id ska innehålla något måste handleEdit() ha körts först.
+  const id = localStorage.getItem("selectedEventId");
+  console.log(id)
 
+  // Lägger till id till addEvent objektet
+   if (id) {
+     addEvent.id = id;
+   }
+
+  // Om addEvent.id är null väljs post om inte väljs put.
   const request = new Request(url, {
-    method: "POST",
-    headers: { "content-type": "application/json" },
-    body: jsonData,
-  });
+   method: addEvent.id ? "PUT" : "POST",
+   headers: {
+     "content-type": "application/json",
+   },
+   body: JSON.stringify(addEvent),
+   });
+ 
+ fetch(request).then((response) => {
+  loadData();
 
-  fetch(request).then((response) => {
-    if (!response.ok) {
-      throw new Error(
-        `Network response was not ok, status code: ${response.status}`
-      );
-    }
-    loadData();
-  });
-}
+  localStorage.removeItem("selectedEventId")
+
+ });
+ }
+
 
 // Kod till modal
 

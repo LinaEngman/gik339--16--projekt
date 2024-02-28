@@ -56,8 +56,11 @@ server.get('/events', (req, res) => {
 });
 
 //Uppdatera (put)
-server.put('/events/:id', (req, res) => {
-  const eventId = req.params.id;
+server.put('/events', (req, res) => {
+  const bodyData = req.body;
+  const eventId = bodyData.id;
+  // const eventId = req.params.id;
+  // Kan det vara för att id fattas i objektet nedan?
   const { titel, datum, plats, tid } = req.body;
 
   const sql = 'UPDATE events SET titel=?, datum=?, plats=?, tid=? WHERE id=?';
